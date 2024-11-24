@@ -6,3 +6,8 @@ class Node {
 }
 
 
+let moves = [(1, 2), (2, 1), (-1, 2), (1, -2), (-2, 1), (-2, -1), (-1, -2), (2, -1)]
+
+function knightMoves(startingPoint, endPoint) {
+
+}
