@@ -6,7 +6,10 @@ class Node {
 }
 
 
-let moves = [[1, 2], [-1, 2], [1, -2], [-2, 1], [-2, -1], [-1, -2], [2, -1], [2, 1]]
+let moves = [
+    [-1, 2], [1, -2], [-2, 1], [-2, -1],
+    [-1, -2], [2, -1], [2, 1], [1, 2]
+];
 
 function knightMoves(startingPoint, endPoint) {
     let startingPointNode = new Node(startingPoint[0], startingPoint[1]);
@@ -15,28 +18,33 @@ function knightMoves(startingPoint, endPoint) {
 
 
     let visitedNodes = [];
-    let queue = [startingPointNode];
+    let queue = [[startingPointNode, [startingPoint]]];
 
+    console.log(queue);
     while (queue.length != 0) {
-        let currentNode = queue.shift();
-        if (!contains(visitedNodes, currentNode)) {
+        let [currentNode, path] = queue.shift();
 
+        if (!contains(visitedNodes, currentNode)) {
             visitedNodes.push(currentNode);
         }
         if (currentNode.x == endPointNode.x && currentNode.y == endPointNode.y) {
-            return visitedNodes;
+            return path;
         }
 
         moves.forEach((move) => {
-            if ((currentNode.x + move[0] >= 0 && currentNode.x + move[0] <= 8) && (currentNode.y + move[1] >= 0 && currentNode.y + move[1] <= 8)) {
-                newMove = new Node(currentNode.x + move[0], currentNode.y + move[1]);
-                if (!contains(queue, newMove)) {
+            let newX = currentNode.x + move[0];
+            let newY = currentNode.y + move[1];
+            if ((newX >= 0 && newX <= 7) && (newY >= 0 && newY <= 7)) {
+                let newMove = new Node(newX, newY);
+                if (!contains(visitedNodes, newMove)) {
+                    queue.push([new Node(currentNode.x + move[0], currentNode.y + move[1]), [...path, [newX, newY]]])
 
-                    queue.push(new Node(currentNode.x + move[0], currentNode.y + move[1]))
                 }
             }
         })
+
     }
+
 
 }
 
@@ -50,7 +58,7 @@ function contains(list, object) {
 
 
 
-console.log(knightMoves([8, 8], [8, 7]));
+console.log(knightMoves([0, 0], [1, 2]));
 
 
 
