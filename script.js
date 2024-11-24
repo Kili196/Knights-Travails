@@ -19,26 +19,40 @@ function knightMoves(startingPoint, endPoint) {
 
     while (queue.length != 0) {
         let currentNode = queue.shift();
+        if (!contains(visitedNodes, currentNode)) {
 
-
-
-
-        visitedNodes.push(currentNode);
+            visitedNodes.push(currentNode);
+        }
         if (currentNode.x == endPointNode.x && currentNode.y == endPointNode.y) {
             return visitedNodes;
         }
 
         moves.forEach((move) => {
-            if (currentNode.x + move[0] >= 0 && currentNode.y + move[1] >= 0) {
-                console.log("ahhh")
-                queue.push(new Node(currentNode.x + move[0], currentNode.y + move[1]))
+            if ((currentNode.x + move[0] >= 0 && currentNode.x + move[0] <= 8) && (currentNode.y + move[1] >= 0 && currentNode.y + move[1] <= 8)) {
+                newMove = new Node(currentNode.x + move[0], currentNode.y + move[1]);
+                if (!contains(queue, newMove)) {
+
+                    queue.push(new Node(currentNode.x + move[0], currentNode.y + move[1]))
+                }
             }
         })
     }
 
 }
 
+function contains(list, object) {
+    return list.some(element => element.x == object.x && element.y == object.y);
 
-console.log(knightMoves([3, 3], [0, 0]));
+}
+
+
+
+
+
+
+console.log(knightMoves([8, 8], [8, 7]));
+
+
+
 
 
